@@ -1,0 +1,33 @@
+.home-header {
+    background-color: beige;
+ border-radius: 0 0 50% 50%;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.home-logo {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-logo .home-item {
+    padding: 0.2rem 1rem;
+
+}
+
+.home-logo .home-item .logo-img {
+    width: 10rem;
+}
+
+.home .home-title {
+    display: none;
+    text-align: center;
+    letter-spacing: .1rem;
+    word-spacing: .2rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--gold-color);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
