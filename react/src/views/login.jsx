@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Input from "./common/input";
+
 import Form from "./common/form";
 import logo from "../assets/images/logo.svg";
 import Joi from "joi-browser";
 import { StateContext } from "../context/contextProvider";
 import http from "../httpClient";
 /* Styles */
-import "../assets/styles/form.css";
-
+import "../assets/styles/guest.css";
 class Login extends Form {
     state = {
         data: { email: "", password: "" },
@@ -35,35 +34,20 @@ class Login extends Form {
     };
     render() {
         return (
-            <div className="container ">
-                <div className="form-box">
+            <div id="guest">
+                <div className="   guest-form ">
                     <img className="logo-img" src={logo} alt="logo" />
                     <form
                         className="form login-form"
                         onSubmit={this.handleSubmit}
                         action=""
                     >
-                        <Input
-                            onChange={this.handleChange}
-                            value={this.state.data.email}
-                            error={this.state.errors.email}
-                            type="email"
-                            name="email"
-                            label="Email"
-                        />
+                        {this.renderInput("Email", "email")}
+                        {this.renderInput("Password", "password", "password")}
 
-                        <Input
-                            label="Password"
-                            onChange={this.handleChange}
-                            name="password"
-                            type="password"
-                            value={this.state.data.password}
-                            error={this.state.errors.password}
-                        />
-
-                        <button type="submit" className="btn btn-primary ">
-                            Login
-                        </button>
+                        {this.renderButton("Login", "btn-primary", {
+                            width: "100%",
+                        })}
                     </form>
                 </div>
             </div>

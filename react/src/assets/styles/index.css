@@ -55,7 +55,7 @@ p {
 .vertical-line {
     position: relative;
     height: 50px;
-    margin: 2.0rem auto 2.0rem auto;
+    margin: 0 auto 2.0rem auto;
 
 }
 
@@ -99,4 +99,23 @@ p {
 .logo-title .second {
     color: var(--gold-color) !important;
 
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.208);
+
+    z-index: 5;
+}
+
+.overlay.show {
+    height: 100vh;
+}
+
+.close-btn {
+    font-size: 2.3rem;
 }

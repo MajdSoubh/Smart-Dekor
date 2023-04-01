@@ -1,0 +1,16 @@
+ .table-search {
+     width: 60% !important;
+
+ }
+
+ .table-utility {
+     display: flex;
+     justify-content: space-between;
+ }
+
+ .table-buttons {
+     display: flex;
+     justify-content: center;
+     gap: 3px;
+     flex-wrap: wrap;
+ }

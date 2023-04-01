@@ -1,5 +1,5 @@
 .pagination {
-    display: block;
+    display: block !important;
 }
 
 .pagination-list {

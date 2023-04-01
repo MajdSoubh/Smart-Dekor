@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../context/contextProvider";
-const GuestLayout = () => {
+
+const adminGuestLayout = () => {
     const { user, token } = useStateContext();
     if (token) {
         return <Navigate to="/admin" />;
@@ -12,4 +13,4 @@ const GuestLayout = () => {
     );
 };
 
-export default GuestLayout;
+export default adminGuestLayout;

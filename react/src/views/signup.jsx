@@ -6,8 +6,9 @@ import { StateContext } from "../context/contextProvider";
 import Joi from "joi-browser";
 
 import http from "../httpClient.js";
+
 /* Styles */
-import "../assets/styles/form.css";
+import "../assets/styles/guest.css";
 
 class Signup extends Form {
     state = {
@@ -18,6 +19,13 @@ class Signup extends Form {
         name: Joi.string(),
         email: Joi.string().email().required().label("Email"),
         password: Joi.string().min(8).required().label("Password"),
+        /*      repeatPassword: Joi.string()
+            .required()
+            .equal(Joi.ref("password"))
+            .label("Confirm password")
+            .options({
+                language: { any: { allowOnly: "must match password" } },
+            }), */
     };
     doSubmit = async () => {
         const { setToken, setUser } = this.context;
@@ -37,42 +45,31 @@ class Signup extends Form {
     };
     render() {
         return (
-            <div className="container ">
-                <div className="form-box">
+            <div id="guest">
+                <div className="guest-form">
                     <img className="logo-img" src={logo} alt="logo" />
                     <form
                         className="form login-form"
                         onSubmit={this.handleSubmit}
                         action=""
                     >
-                        <Input
-                            onChange={this.handleChange}
-                            value={this.state.data.name}
-                            error={this.state.errors.name}
-                            type="text"
-                            name="name"
-                            label="Full Name"
-                        />
-                        <Input
-                            onChange={this.handleChange}
-                            value={this.state.data.email}
-                            error={this.state.errors.email}
-                            type="email"
-                            name="email"
-                            label="Email"
-                        />
+                        {this.renderInput("Full Name", "name")}
 
-                        <Input
-                            label="Password"
+                        {this.renderInput("Email", "email")}
+
+                        {this.renderInput("Password", "password", "password")}
+
+                        {/*       <Input
+                            label="Repeat password"
                             onChange={this.handleChange}
-                            name="password"
+                            name="repeatPassword"
                             type="password"
-                            value={this.state.data.password}
-                            error={this.state.errors.password}
-                        />
-                        <button type="submit" className="btn btn-primary">
-                            Signup
-                        </button>
+                            value={this.state.data.repeatPassword}
+                            error={this.state.errors.repeatPassword}
+                        /> */}
+                        {this.renderButton("Signup", "btn-primary", {
+                            width: "100%",
+                        })}
                     </form>
                 </div>
             </div>
