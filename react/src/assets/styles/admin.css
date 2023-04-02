@@ -108,8 +108,7 @@ aside .sidebar .list-item {
 }
 
 aside .sidebar .list-item:last-child {
-    position: absolute;
-    bottom: 0;
+    flex-grow: 1;
 }
 
 aside .sidebar .list-item.active {
@@ -143,7 +142,7 @@ aside .sidebar .list-item:hover i {
     right: 0;
     z-index: 3;
     height: 3.5rem;
-   /*  box-shadow: 1rem 3rem 4rem var(--light-color); */
+    /*  box-shadow: 1rem 3rem 4rem var(--light-color); */
     background-color: white;
 }
 
@@ -165,6 +164,8 @@ aside .sidebar .list-item:hover i {
     display: none;
     position: absolute;
     left: 0;
+
+
 }
 
 /* main */
@@ -240,10 +241,7 @@ aside .sidebar .list-item:hover i {
         cursor: pointer;
     }
 
-    .admin aside .sidebar .list-item:last-child {
-        position: absolute;
-        bottom: 5rem;
-    }
+
 
     .admin nav {
         width: 100%;

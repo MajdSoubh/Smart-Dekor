@@ -20,7 +20,7 @@ const Select = ({ name, label, options, className, error, ...rest }) => {
                     );
                 })}
             </select>
-            {error && <span className="alert alert-danger">{error}</span>}
+            {error && <div className="alert alert-danger">{error}</div>}
         </div>
     );
 };

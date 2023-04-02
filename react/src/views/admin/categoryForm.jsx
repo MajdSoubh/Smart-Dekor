@@ -17,7 +17,7 @@ class CategoryForm extends Form {
             this.setState({ data: res.data });
         } catch (ex) {
             const { response } = ex;
-            if (response.status == 404) {
+            if (response && response.status == 404) {
                 toast.error("Category not found");
                 this.props.navigate("/admin/categories", { replace: true });
             }
@@ -56,7 +56,6 @@ class CategoryForm extends Form {
     render() {
         return (
             <div className=" category-form ">
-                {/* modify this */}
                 <h2 className="title text-center mb-4">
                     {this.state.isModify ? "Modify Category" : "New Category"}
                 </h2>

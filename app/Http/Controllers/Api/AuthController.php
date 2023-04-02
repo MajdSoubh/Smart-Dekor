@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LogoutRequest;
 use App\Http\Requests\SignupRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,11 +35,11 @@ class AuthController extends Controller
         $token =   $user->createToken('main')->plainTextToken;
         return response(['user' => $user->name, 'token' => $token]);
     }
-    public function logout(Request $request)
+    public function logout(LogoutRequest $request)
     {
         /** @var user User */
         $user = Auth::user();
         $user->currentAccessToken();
-        return response('', 204);
+        return response('true', 204);
     }
 }

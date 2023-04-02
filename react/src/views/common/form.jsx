@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import ImagesUploaders from "./imagesUploaders";
+import TextArea from "./textArea";
 
 class Form extends Component {
     state = {
@@ -38,9 +41,18 @@ class Form extends Component {
 
         return error ? error.details[0].message : null;
     };
-    handleFile = ({ target }) => {
-        const { name, files } = target;
+    handleFileSelect = ({ target }) => {
+        const { name, files: targetFiles } = target;
+        const files = [...this.state[name]];
 
+        _.forEach(targetFiles, (f) => {
+            files.push(f);
+        });
+        this.setState({ [name]: files });
+    };
+    handleFileUnSelect = (name, index) => {
+        const files = [...this.state[name]];
+        files.splice(index, 1);
         this.setState({ [name]: files });
     };
     handleChange = ({ target }) => {
@@ -71,47 +83,46 @@ class Form extends Component {
             </button>
         );
     };
-    renderInput(label, name, type = "text", customClass, events) {
+    renderInput(label, name, type = "text", className = null, events) {
         return (
             <Input
                 label={label}
                 name={name}
                 type={type}
                 {...events}
-                customClass={customClass}
+                className={className}
                 onChange={this.handleChange}
                 value={this.state.data[name]}
                 error={this.state.errors[name]}
             />
         );
     }
-    renderFileInput(name, multiple = "yes", customClass, events) {
+
+    renderImagesUpload(name, onChange, multiple = true, className = null) {
         return (
-            <Input
+            <ImagesUploaders
+                onChange={this.handleFileSelect}
+                onDelete={this.handleFileUnSelect}
                 name={name}
-                type="file"
                 multiple={multiple}
-                {...events}
-                customClass={customClass}
-                onChange={this.handleFile}
-                label={null}
+                className={className}
+                error={this.state.errors[name]}
             />
         );
     }
 
-    renderTextarea(label, name, rows = 3, cols = 3, customClass) {
+    renderTextarea(label, name, rows = 3, cols = 3, className = null) {
         return (
-            <div className="form-group mb-3">
-                <textarea
-                    rows={rows}
-                    cols={cols}
-                    name={name}
-                    className={customClass || "form-control py-3"}
-                    placeholder={label}
-                    onChange={this.handleChange}
-                    value={this.state.data[name]}
-                ></textarea>
-            </div>
+            <TextArea
+                label={label}
+                name={name}
+                rows={rows}
+                cols={cols}
+                className={className}
+                onChange={this.handleChange}
+                value={this.state.data[name]}
+                error={this.state.errors[name]}
+            />
         );
     }
     renderSelect(label, name, options = [], className = null) {

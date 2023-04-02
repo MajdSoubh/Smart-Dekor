@@ -5,18 +5,10 @@ import Pagination from "../common/pagination";
 import Table from "../common/table";
 /* styles */
 import "../../assets/styles/table.css";
+import http from "../../httpClient";
 class ProjectTable extends Component {
     state = {
-        projects: [
-            {
-                id: 1,
-                title: "hello my name is majd af adf adfsdfsdf",
-                description: "asfas",
-            },
-            { id: 2, title: "ahello2", description: "basfa2s" },
-            { id: 3, title: "f", description: "asfas" },
-            { id: 4, title: "aheldfsadfsadfgdflo2", description: "basfa2s" },
-        ],
+        projects: [],
         sortColumns: [],
         search: "",
         currentPage: 1,
@@ -28,6 +20,7 @@ class ProjectTable extends Component {
             path: "title",
         },
         { label: "Description", path: "description" },
+        { label: "Category", path: "category.name" },
 
         {
             label: "Action",
@@ -42,6 +35,14 @@ class ProjectTable extends Component {
             },
         },
     ];
+    async componentDidMount() {
+        try {
+            const { data: resData } = await http.get("/project");
+            this.setState({ projects: resData });
+        } catch (ex) {
+            console.log(ex);
+        }
+    }
     renderTableButtons(project) {
         return (
             <div className="table-buttons">
@@ -63,23 +64,25 @@ class ProjectTable extends Component {
     }
     renderRemove(project) {
         return (
-            <div class="modal fade" id="remove-modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5">Alert</h1>
+            <div className="modal fade" id="remove-modal">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5">Alert</h1>
                             <button
                                 type="button"
-                                class="btn-close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div class="modal-body">Are you sure from remove?</div>
-                        <div class="modal-footer">
+                        <div className="modal-body">
+                            Are you sure from remove?
+                        </div>
+                        <div className="modal-footer">
                             <button
                                 type="button"
-                                class="btn btn-secondary"
+                                className="btn btn-secondary"
                                 data-bs-dismiss="modal"
                             >
                                 Close
@@ -87,7 +90,7 @@ class ProjectTable extends Component {
                             <button
                                 onClick={() => this.handleDelete(project)}
                                 type="button"
-                                class="btn btn-danger"
+                                className="btn btn-danger"
                             >
                                 Remove
                             </button>
