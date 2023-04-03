@@ -26,12 +26,19 @@ class ProjectForm extends Form {
         this.setState({ isModify: true });
         try {
             const res = await http.get(`/project/${projectId}`);
-            this.setState({ categories: res.data });
+            this.mapDataToView(res.data);
         } catch (ex) {
             console.log("project : ", ex);
         }
     }
-
+    mapDataToView = (resData) => {
+        const data = {};
+        data.category = resData.category_id;
+        data.description = resData.description;
+        data.title = resData.title;
+        _.forEach(resData.images, (img) => {});
+        this.setState({ data });
+    };
     async doSubmit() {
         const payload = new FormData();
         _.forEach(this.state.images, (img) => {

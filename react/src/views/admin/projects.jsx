@@ -30,6 +30,7 @@ class ProjectTable extends Component {
                     <div>
                         {this.renderTableButtons(project)}
                         {this.renderRemove(project)}
+                        {this.renderImageList(project)}
                     </div>
                 );
             },
@@ -48,10 +49,18 @@ class ProjectTable extends Component {
             <div className="table-buttons">
                 <button
                     data-bs-toggle="modal"
-                    data-bs-target="#remove-modal"
+                    data-bs-target={"#remove-modal-" + project.id}
                     className="btn btn-danger "
                 >
                     <i className="bi bi-trash-fill"></i>
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target={"#images-list-modal-" + project.id}
+                >
+                    <i class="bi bi-eye-fill"></i>
                 </button>
                 <Link
                     className="btn btn-secondary"
@@ -64,7 +73,7 @@ class ProjectTable extends Component {
     }
     renderRemove(project) {
         return (
-            <div className="modal fade" id="remove-modal">
+            <div className="modal fade" id={"remove-modal-" + project.id}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -93,6 +102,52 @@ class ProjectTable extends Component {
                                 className="btn btn-danger"
                             >
                                 Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    renderImageList(project) {
+        console.log(project.images.length);
+        return (
+            <div
+                className="modal fade image-modal"
+                id={"images-list-modal-" + project.id}
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5">Images</h1>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div className="modal-body">
+                            <div
+                                className="images-box"
+                                style={{
+                                    display: "flex",
+                                    flexWrap: "wrap",
+                                    width: "100%",
+                                }}
+                            >
+                                {project.images.map((img, ind) => (
+                                    <img key={ind} src={img.path} style={{}} />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
                             </button>
                         </div>
                     </div>

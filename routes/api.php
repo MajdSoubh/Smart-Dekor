@@ -33,3 +33,4 @@ Route::put('/category/{id}', [CategoryController::class, "modify"]);
 Route::delete('/category/{id}', [CategoryController::class, "delete"]);
 Route::post('/project', [ProjectController::class, "store"]);
 Route::get('/project', [ProjectController::class, "all"]);
+Route::get('/project/{id}', [ProjectController::class, "show"]);
