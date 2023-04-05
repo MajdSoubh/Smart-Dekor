@@ -7,7 +7,7 @@ import { useStateContext } from "../context/contextProvider";
 import "../assets/styles/admin.css";
 const adminDefaultLayout = () => {
     const { user, token, setToken } = useStateContext();
-    if (!token) {
+    if (!localStorage.getItem("ACCESS_TOKEN")) {
         return <Navigate to="/admin/login" />;
     }
 

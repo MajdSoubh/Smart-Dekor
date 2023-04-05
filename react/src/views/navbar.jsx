@@ -36,7 +36,7 @@ const Navbar = () => {
                         <NavLink
                             onClick={displayList}
                             className="nav-link hover-color-gold"
-                            to="/home#home"
+                            to="/"
                         >
                             Home
                         </NavLink>
@@ -45,7 +45,7 @@ const Navbar = () => {
                         <NavLink
                             onClick={displayList}
                             className="nav-link hover-color-gold"
-                            to="/home#projects"
+                            to="/projects"
                         >
                             Projects
                         </NavLink>

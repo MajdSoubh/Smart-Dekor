@@ -121,7 +121,6 @@ class Categories extends Component {
             }
         } catch (ex) {
             this.setState({ categories: originalCategories });
-            console.log(ex);
         }
     };
 

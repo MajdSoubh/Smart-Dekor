@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ImageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,11 +27,16 @@ Route::post('/login', [AuthController::class, "login"]);
 Route::post('/logout', [AuthController::class, "logout"]);
 Route::get('/contact', [ContactController::class, "all"]);
 Route::put('/contact/update', [ContactController::class, "store"]);
-Route::get('/category', [CategoryController::class, "all"]);
-Route::get('/category/{id}', [CategoryController::class, "show"]);
+
+Route::get('/category', [CategoryController::class, "all"])->middleware("auth:sanctum");
 Route::post('/category', [CategoryController::class, "store"]);
-Route::put('/category/{id}', [CategoryController::class, "modify"]);
+Route::get('/category/{id}', [CategoryController::class, "show"]);
+Route::put('/category/{id}', [CategoryController::class, "modify"])->middleware("auth:sanctum");
 Route::delete('/category/{id}', [CategoryController::class, "delete"]);
-Route::post('/project', [ProjectController::class, "store"]);
+
 Route::get('/project', [ProjectController::class, "all"]);
+Route::post('/project', [ProjectController::class, "store"]);
 Route::get('/project/{id}', [ProjectController::class, "show"]);
+Route::post('/project/{id}', [ProjectController::class, "modify"]);
+
+Route::get('/image/{path}', [ImageController::class, "get"]);

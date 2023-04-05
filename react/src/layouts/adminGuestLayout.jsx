@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useStateContext } from "../context/contextProvider";
 
+import { useStateContext } from "../context/contextProvider";
 const adminGuestLayout = () => {
     const { user, token } = useStateContext();
     if (token) {

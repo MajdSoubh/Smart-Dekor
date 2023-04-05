@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table)
+        Schema::create('headers', function (Blueprint $table)
         {
             $table->id();
-            $table->string("path"); //directory public path
-            $table->string("title");
-            $table->foreignId("project_id")->nullable()->constrained("projects")->onUpdate("cascade")->onDelete("cascade");
+            $table->string("intro_title");
+            $table->string("intro_description");
+            $table->string("outro_title");
+            $table->string("outro_description");
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('headers');
     }
 };

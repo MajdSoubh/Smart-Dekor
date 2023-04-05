@@ -3,7 +3,6 @@ import Form from "../common/form";
 import http from "../../httpClient";
 import { withParams } from "../../withParams";
 import { toast } from "react-toastify";
-
 class CategoryForm extends Form {
     state = { data: { name: "" }, errors: {}, isModify: false };
 
@@ -24,19 +23,39 @@ class CategoryForm extends Form {
         }
     }
     async doSubmit() {
-        const endPoint = this.state.isModify
-            ? `/category/${this.props.params.id}`
-            : "/category";
+        return this.state.isModify ? this.sendUpdatedData() : this.sendData();
+    }
+    sendUpdatedData = async () => {
         try {
-            const res = this.state.isModify
-                ? await http.put(endPoint, this.state.data)
-                : await http.post(endPoint, this.state.data);
+            const res = await http.put(
+                `/category/${this.props.params.id}`,
+                this.state.data
+            );
             if (res.status == 200) {
-                toast.success(
-                    this.state.isModify
-                        ? "Category modified successfully"
-                        : "Category created successfully"
-                );
+                toast.success("Category modified successfully");
+                return this.props.navigate("/admin/categories", {
+                    replace: true,
+                });
+            }
+        } catch (ex) {
+            const { response } = ex;
+            if (response && response.status == 422) {
+                const resErrors = response.data.errors;
+                const errors = {};
+                for (const error in resErrors) {
+                    errors[error] = resErrors[error][0];
+                }
+                this.setState({ errors });
+            } else if (response && response.status == 404) {
+                toast.error("Category not exists");
+            }
+        }
+    };
+    sendData = async () => {
+        try {
+            const res = await http.post("/category", this.state.data);
+            if (res.status == 200) {
+                toast.success("Category created successfully");
                 return this.props.navigate("/admin/categories", {
                     replace: true,
                 });
@@ -52,7 +71,7 @@ class CategoryForm extends Form {
                 this.setState({ errors });
             }
         }
-    }
+    };
     render() {
         return (
             <div className=" category-form ">

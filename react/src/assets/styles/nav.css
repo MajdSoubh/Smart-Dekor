@@ -50,7 +50,7 @@ nav .mobile {
     width: 0vw;
     height: 100vh;
     z-index: 5;
-    background-color: beige;
+    background-color: var(--background-color-2);
     transition: width .2s ease-in;
     overflow: hidden;
     display: flex;

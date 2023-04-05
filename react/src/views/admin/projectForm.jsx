@@ -3,10 +3,12 @@ import _ from "lodash";
 import Form from "../common/form";
 import http from "../../httpClient";
 import { withParams } from "../../withParams";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 class ProjectForm extends Form {
     state = {
-        data: { title: "", description: "" },
+        data: { title: "", description: "", category: "", images: [] },
         errors: {},
         images: [],
         categories: [],
@@ -31,22 +33,56 @@ class ProjectForm extends Form {
             console.log("project : ", ex);
         }
     }
-    mapDataToView = (resData) => {
+    async mapDataToView(resData) {
         const data = {};
         data.category = resData.category_id;
         data.description = resData.description;
         data.title = resData.title;
-        _.forEach(resData.images, (img) => {});
-        this.setState({ data });
-    };
-    async doSubmit() {
-        const payload = new FormData();
-        _.forEach(this.state.images, (img) => {
-            payload.append("images[]", img);
-        });
-        for (const key in this.state.data) {
-            payload.append(key, this.state.data[key]);
+        data.images = [];
+        for (let i = 0; i < resData.images.length; i++) {
+            const img = resData.images[i];
+            const res = await http.get(`image/${img.title}`, {
+                responseType: "blob",
+            });
+            const file = new File([res.data], img.title);
+            data.images.push(file);
         }
+
+        this.setState({ data });
+    }
+    sendUpdatedData = async (payload) => {
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        try {
+            const res = await http.post(
+                `/project/${this.props.params.id}`,
+                payload,
+                config
+            );
+            if (res.status == 200) {
+                toast.success("Project modified successfully");
+                return this.props.navigate("/admin/projects", {
+                    replace: true,
+                });
+            }
+        } catch (ex) {
+            const { response } = ex;
+            if (response && response.status == 422) {
+                const resErrors = response.data.errors;
+                const errors = {};
+                for (const error in resErrors) {
+                    errors[error] = resErrors[error][0];
+                }
+                this.setState({ errors });
+            } else if (response && response.status == 404) {
+                toast.error("Project not exists");
+            }
+        }
+    };
+    sendData = async (payload) => {
         const config = {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -54,7 +90,12 @@ class ProjectForm extends Form {
         };
         try {
             const res = await http.post("/project", payload, config);
-            console.log(res);
+            if (res.status == 200) {
+                toast.success("Project created successfully");
+                return this.props.navigate("/admin/projects", {
+                    replace: true,
+                });
+            }
         } catch (ex) {
             const { response } = ex;
             if (response && response.status == 422) {
@@ -66,6 +107,21 @@ class ProjectForm extends Form {
                 this.setState({ errors });
             }
         }
+    };
+    doSubmit() {
+        const payload = new FormData();
+        for (const key in this.state.data) {
+            if (key == "images") {
+                _.forEach(this.state.data.images, (img) => {
+                    payload.append("images[]", img);
+                });
+                continue;
+            }
+            payload.append(key, this.state.data[key]);
+        }
+        return this.state.isModify
+            ? this.sendUpdatedData(payload)
+            : this.sendData(payload);
     }
     render() {
         return (

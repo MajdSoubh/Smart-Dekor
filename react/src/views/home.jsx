@@ -5,9 +5,6 @@ import Outro from "./outro";
 import Carousel from "./carousel";
 import Footer from "./footer";
 
-/* Styles */
-import "../assets/styles/home.css";
-
 /* images */
 import logo from "../assets/images/logo.svg";
 import http from "../httpClient";
@@ -16,7 +13,6 @@ class Home extends Component {
     state = {
         intro: { introTitle: "", introDesc: "" },
         outro: { outroTitle: "", outroDesc: "" },
-        contact: {},
     };
 
     async componentDidMount() {
@@ -31,9 +27,7 @@ class Home extends Component {
                 "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus doloremque perspiciatis sapiente nam ullam rem magni nemo minima et. Recusandae autem impedit vel dolore pariatur ea ratione hic, harum fuga doloribus ducimus, facere mollitia debitis esse exercitationem iusto! Dolor, voluptates?",
         };
 
-        let res = await http.get("/contact");
-        const contact = res["data"] ? res.data : "";
-        this.setState({ intro, outro, contact });
+        this.setState({ intro, outro });
     }
     render() {
         return (
@@ -63,7 +57,6 @@ class Home extends Component {
                     <hr className="horizontal-line" />
                     <Outro data={this.state.outro} />
                 </div>
-                <Footer data={this.state.contact} />
             </section>
         );
     }

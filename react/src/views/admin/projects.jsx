@@ -6,6 +6,7 @@ import Table from "../common/table";
 /* styles */
 import "../../assets/styles/table.css";
 import http from "../../httpClient";
+import { toast } from "react-toastify";
 class ProjectTable extends Component {
     state = {
         projects: [],
@@ -60,7 +61,7 @@ class ProjectTable extends Component {
                     data-bs-toggle="modal"
                     data-bs-target={"#images-list-modal-" + project.id}
                 >
-                    <i class="bi bi-eye-fill"></i>
+                    <i className="bi bi-eye-fill"></i>
                 </button>
                 <Link
                     className="btn btn-secondary"
@@ -110,7 +111,6 @@ class ProjectTable extends Component {
         );
     }
     renderImageList(project) {
-        console.log(project.images.length);
         return (
             <div
                 className="modal fade image-modal"
@@ -165,8 +165,17 @@ class ProjectTable extends Component {
         this.setState({ sortColumns });
     };
     handleDelete = (project) => {
-        /*   const projects = this.state.projects.filter((m) => m.id !== project.id);
-        this.setState({ projects }); */
+        const orginalProjects = this.state.projects;
+        const projects = this.state.projects.filter((m) => m.id !== project.id);
+        this.setState({ projects });
+        try {
+            const res = http.delete(`project/${project.id}`);
+            if (res.status == 200) {
+                toast.success("Project deleted successfully");
+            }
+        } catch (ex) {
+            this.setState({ orginalProjects });
+        }
     };
     handelPageChange = (currentPage) => {
         this.setState({ currentPage });

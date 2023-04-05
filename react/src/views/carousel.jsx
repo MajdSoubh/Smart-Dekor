@@ -9,8 +9,7 @@ import projectFive from "../assets/images/project-5.jpg";
 import projectSechs from "../assets/images/project-6.jpg";
 import projectSeven from "../assets/images/project-7.jpg";
 import projectEight from "../assets/images/project-8.jpg";
-/* styles */
-import "../assets/styles/projects.css";
+
 class Carousel extends Component {
     state = { projects: [], pagination: { currentPage: 0, pageLimit: 6 } };
     carouselRef = React.createRef();
@@ -117,14 +116,6 @@ class Carousel extends Component {
         this.setState({ projects });
     }
 
-    /*   pageData = () => {
-        const { currentPage, pageLimit } = this.state.pagination;
-        const items = [...this.state.projects];
-        const startIndex = currentPage * pageLimit;
-        const data = items.slice(startIndex, startIndex + pageLimit);
-        return { data };
-    };
- */
     handlePageChange = (currentPage) => {
         const pagination = { ...this.state.pagination };
         pagination.currentPage = currentPage;
@@ -159,11 +150,9 @@ class Carousel extends Component {
     };
     render() {
         const projects = [...this.state.projects];
-        /*   const count = this.state.projects.length;
-        const limit = this.state.pagination.pageLimit;
-        const current = this.state.pagination.currentPage; */
+
         return (
-            <div className="projects" id="projects">
+            <div className="carousel" id="carousel">
                 <div className="projects-title">
                     <h2>Check our latest work</h2>
                     <p>Celebrating inspiring design & thought leadership.</p>

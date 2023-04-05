@@ -2,8 +2,6 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-/* Styles */
-import "../assets/styles/footer.css";
 const Footer = ({
     data: { phone, email, whatsapp, facebook, instagram, address },
 }) => {

@@ -41,19 +41,22 @@ class Form extends Component {
 
         return error ? error.details[0].message : null;
     };
-    handleFileSelect = ({ target }) => {
+    handleFileChange = ({ target }) => {
         const { name, files: targetFiles } = target;
-        const files = [...this.state[name]];
-
+        const data = { ...this.state.data };
+        const files = [...data[name]];
         _.forEach(targetFiles, (f) => {
             files.push(f);
         });
-        this.setState({ [name]: files });
+        data[name] = files;
+        this.setState({ data });
     };
     handleFileUnSelect = (name, index) => {
-        const files = [...this.state[name]];
+        const data = { ...this.state.data };
+        const files = [...data[name]];
         files.splice(index, 1);
-        this.setState({ [name]: files });
+        data[name] = files;
+        this.setState({ data });
     };
     handleChange = ({ target }) => {
         const { name, value } = target;
@@ -101,11 +104,12 @@ class Form extends Component {
     renderImagesUpload(name, onChange, multiple = true, className = null) {
         return (
             <ImagesUploaders
-                onChange={this.handleFileSelect}
-                onDelete={this.handleFileUnSelect}
+                onChange={this.handleFileChange}
+                onUnSelect={this.handleFileUnSelect}
                 name={name}
                 multiple={multiple}
                 className={className}
+                value={this.state.data[name]}
                 error={this.state.errors[name]}
             />
         );

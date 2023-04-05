@@ -5,34 +5,31 @@ import uplodIcon from "../../assets/images/upload.png";
 const ImagesUploaders = ({
     className,
     onChange,
-    onDelete,
+    onUnSelect,
+    value,
     name,
     error,
     ...rest
 }) => {
     const [preview, setPreview] = useState([]);
-    const handleImagePreview = ({ target }) => {
-        const { files } = target;
-        const updatedPreview = [...preview];
+
+    function handlePreviewChange() {
+        const files = [...value];
+
+        const updatedPreview = [];
         _.forEach(files, (img) => {
             updatedPreview.push(URL.createObjectURL(img));
         });
         setPreview(updatedPreview);
-    };
-    const handleDelete = ({ target }) => {
-        const index = target.dataset.key;
-        const updatedPreview = [...preview];
-        updatedPreview.splice(index, 1);
-        setPreview(updatedPreview);
-        onDelete(name, index);
-    };
+    }
     useEffect(() => {
+        handlePreviewChange();
         return function () {
             _.forEach(preview, (img) => {
                 const s = URL.revokeObjectURL(img);
             });
         };
-    }, []);
+    }, [value]);
 
     return (
         <React.Fragment>
@@ -53,9 +50,9 @@ const ImagesUploaders = ({
                             className="preview-container"
                         >
                             <span
-                                onClick={handleDelete}
                                 key={ind}
-                                data-key={ind}
+                                data-ff={ind}
+                                onClick={() => onUnSelect(name, ind)}
                                 style={{
                                     position: "absolute",
                                     right: "0",
@@ -107,12 +104,8 @@ const ImagesUploaders = ({
                         {...rest}
                         name={name}
                         encType="multipart/form-data"
-                        onChange={(ev) => {
-                            handleImagePreview(ev);
-                            if (onChange) {
-                                onChange(ev);
-                            }
-                        }}
+                        onChange={onChange}
+                        accept="image/*"
                         style={{
                             width: "100px",
                             height: "100px",

@@ -21,12 +21,12 @@ ul {
     --gray-color: #abb2b2;
     --blue-color: #123c84;
     --dark-color: black;
-
     --primary-color: #7380ec;
     --danger-color: #ff7782;
     --light-color: #cecece8c;
     --info-dark-color: #7d8da1;
     --background-color: #f6f6f9;
+    --background-color-2: #f5f2ee;
 }
 
 body {
