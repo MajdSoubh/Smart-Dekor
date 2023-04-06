@@ -13,7 +13,7 @@ class Categories extends Component {
         sortColumns: [],
         search: "",
         currentPage: 1,
-        pageLimit: 2,
+        pageLimit: 8,
     };
     columns = [
         {

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("intro_description");
             $table->string("outro_title");
             $table->string("outro_description");
+            $table->string("portfolio_description");
         });
     }
 

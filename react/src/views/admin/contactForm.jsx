@@ -5,7 +5,7 @@ import http from "../../httpClient";
 import Form from "../common/form";
 import { toast } from "react-toastify";
 
-class Contact extends Form {
+class ContactForm extends Form {
     state = {
         data: {
             email: "",
@@ -47,7 +47,7 @@ class Contact extends Form {
     }
     async doSubmit() {
         try {
-            const res = await http.put("/contact/update", this.state.data);
+            const res = await http.post("/contact/update", this.state.data);
             res.status == 200 ? toast.success("Data Saved Successfully") : null;
         } catch (ex) {
             const { response } = ex;
@@ -84,4 +84,4 @@ class Contact extends Form {
     }
 }
 
-export default Contact;
+export default ContactForm;

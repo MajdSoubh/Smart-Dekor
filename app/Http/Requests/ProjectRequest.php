@@ -27,7 +27,7 @@ class projectRequest extends FormRequest
 
         return [
             "title" => "required|string",
-            "description" => "required|string",
+            "description" => "nullable",
             "category" => "required|numeric|exists:categories,id",
             "images" => "required|array|min:1",
             "images.*" => "image",

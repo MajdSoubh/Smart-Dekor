@@ -14,9 +14,9 @@ import AdminProjects from "./views/admin/projects";
 import Categories from "./views/admin/categories";
 import ProjectForm from "./views/admin/projectForm";
 import CategoryForm from "./views/admin/categoryForm";
-import IntroForm from "./views/admin/introForm";
-import OutroForm from "./views/admin/outroForm";
-import Contact from "./views/admin/contact";
+import HeaderForm from "./views/admin/headerForm";
+import ContactForm from "./views/admin/contactForm";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -30,15 +30,14 @@ const router = createBrowserRouter([
         path: "/admin",
         element: <AdminDefaultLayout />,
         children: [
-            { path: "/admin/contact", element: <Contact /> },
+            { path: "/admin/contact", element: <ContactForm /> },
             { path: "/admin/projects", element: <AdminProjects /> },
             { path: "/admin/project/add", element: <ProjectForm /> },
             { path: "/admin/project/modify/:id", element: <ProjectForm /> },
             { path: "/admin/categories", element: <Categories /> },
             { path: "/admin/category/add", element: <CategoryForm /> },
             { path: "/admin/category/modify/:id", element: <CategoryForm /> },
-            { path: "/admin/intro", element: <IntroForm /> },
-            { path: "/admin/outro", element: <OutroForm /> },
+            { path: "/admin/header", element: <HeaderForm /> },
         ],
     },
     {

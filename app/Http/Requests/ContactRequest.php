@@ -16,39 +16,29 @@ class ContactRequest extends FormRequest
         return true;
     }
 
-    protected function onCreate()
-    {
-        return [
-            "phone" => "string|nullable",
-            "email" => "email|nullable",
-            "address" => "string|nullable",
-            "whatsapp" => "string|nullable",
-            "facebook" => "string|nullable",
-            "instagram" => "string|nullable",
-        ];
-    }
-    protected function onUpdate()
-    {
-        return [
-            "phone" => "string|nullable",
-            "email" => "email|nullable",
-            "address" => "string|nullable",
-            "whatsapp" => "string|nullable",
-            "facebook" => "string|nullable",
-            "instagram" => "string|nullable",
-        ];
-    }
+
     public function attributes()
     {
         return [
             'email' => 'Email address',
             'whatsapp' => 'Whats app',
+            "phone" => "Phone",
+            "address" => "Address",
+            "facebook" => "Facebook",
+            "instagram" => "Instagram",
+
         ];
     }
 
     public function rules()
     {
-        return request()->isMethod("put") || request()->isMethod("patch") ?
-            $this->onUpdate() : $this->onCreate();
+        return [
+            "email" => "email|nullable",
+            "whatsapp" => "string|nullable",
+            "phone" => "string|nullable",
+            "address" => "string|nullable",
+            "facebook" => "string|nullable",
+            "instagram" => "string|nullable",
+        ];
     }
 }

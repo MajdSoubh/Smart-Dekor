@@ -7,7 +7,7 @@ import { useStateContext } from "../context/contextProvider";
 import "../assets/styles/admin.css";
 const adminDefaultLayout = () => {
     const { user, token, setToken } = useStateContext();
-    if (!localStorage.getItem("ACCESS_TOKEN")) {
+    if (!localStorage.getItem("ACCESS_TOKEN") || !token) {
         return <Navigate to="/admin/login" />;
     }
 
@@ -21,7 +21,6 @@ const adminDefaultLayout = () => {
             console.log(ex);
         }
         setToken(null);
-        return <Navigate to="/login" />;
     };
 
     const toggelSidebar = (e) => {
@@ -43,19 +42,11 @@ const adminDefaultLayout = () => {
                     <div className="sidebar">
                         <NavLink
                             onClick={toggelSidebar}
-                            className="list-item"
-                            to="/admin/dashboard"
-                        >
-                            <i className="bi bi-grid-fill"></i>
-                            <h3>Dashboard</h3>
-                        </NavLink>
-                        <NavLink
-                            onClick={toggelSidebar}
                             className="list-item "
-                            to="/admin/intro"
+                            to="/admin/header"
                         >
                             <i className="bi bi-grid-fill"></i>
-                            <h3>Intro</h3>
+                            <h3>Header</h3>
                         </NavLink>
                         <NavLink
                             onClick={toggelSidebar}
@@ -73,14 +64,7 @@ const adminDefaultLayout = () => {
                             <i className="bi bi-grid-fill"></i>
                             <h3>Categories</h3>
                         </NavLink>
-                        <NavLink
-                            onClick={toggelSidebar}
-                            className="list-item"
-                            to="/admin/outro"
-                        >
-                            <i className="bi bi-grid-fill"></i>
-                            <h3>Outro</h3>
-                        </NavLink>
+
                         <NavLink
                             onClick={toggelSidebar}
                             className="list-item"

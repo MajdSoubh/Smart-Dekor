@@ -6,9 +6,10 @@ class Projects extends Component {
         projects: [],
         categories: [],
         selectedCategory: "",
-        imageShow: false,
+        imageView: false,
     };
     categoryListRef = React.createRef();
+    imageViewRef = React.createRef();
     async componentDidMount() {
         const { data: projects } = await http.get("project");
         const { data: categories } = await http.get("category");
@@ -17,11 +18,35 @@ class Projects extends Component {
     categoryListDisplayToggle = () => {
         this.categoryListRef.current.classList.toggle("expand");
     };
-    handleImageShow = () => {
-        this.setState({ imageShow: !this.state.imageShow });
+    renderImageView(image) {
+        return (
+            <div
+                className="modal fade image-modal"
+                id={"image-show-" + image.id}
+            >
+                <div className="modal-dialog modal-dialog-centered box">
+                    <img className="image" src={image.path} alt="" />
+                    <button
+                        type="button"
+                        className="btn btn-danger px-5"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        );
+    }
+    handleImageView = () => {
+        const view = !this.state.imageView;
+        this.setState({ imageView: view });
+        if (!view) return null;
+        this.imageViewRef.current.innerText = <h1>helellele</h1>;
     };
     handleSelectCategory = (category) => {
-        this.categoryListRef.current.classList.remove("expand");
+        this.categoryListRef.current
+            ? this.categoryListRef.current.classList.remove("expand")
+            : "";
         this.setState({ selectedCategory: category });
     };
     getProjects = () => {
@@ -76,36 +101,43 @@ class Projects extends Component {
                         ))}
                     </ul>
                 </div>
-                <div className="other-categories">
-                    <span
-                        onClick={this.categoryListDisplayToggle}
-                        className="other-categories-btn "
-                    >
-                        More Categories
-                    </span>
-                    <ul
-                        ref={this.categoryListRef}
-                        className="others-categories-list"
-                    >
-                        {this.state.categories.slice(2).map((cat, ind) => (
-                            <li
-                                key={ind}
-                                className={
-                                    this.state.selectedCategory === cat.name
-                                        ? "active"
-                                        : ""
-                                }
-                                onClick={() =>
-                                    this.handleSelectCategory(cat.name)
-                                }
-                            >
-                                {cat.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                {this.state.categories.length > 3 && (
+                    <div className="other-categories">
+                        <span
+                            onClick={this.categoryListDisplayToggle}
+                            className="other-categories-btn "
+                        >
+                            More Categories
+                        </span>
+                        <ul
+                            ref={this.categoryListRef}
+                            className="others-categories-list"
+                        >
+                            {this.state.categories.slice(2).map((cat, ind) => (
+                                <li
+                                    key={ind}
+                                    className={
+                                        this.state.selectedCategory === cat.name
+                                            ? "active"
+                                            : ""
+                                    }
+                                    onClick={() =>
+                                        this.handleSelectCategory(cat.name)
+                                    }
+                                >
+                                    {cat.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
                 <div className="projects-container">
+                    {!projects.length && (
+                        <h3 className="text-center">
+                            Sorry no projects found in this category
+                        </h3>
+                    )}
                     {projects.map((project, ind) => {
                         return (
                             <div key={ind} className="project">
@@ -113,21 +145,20 @@ class Projects extends Component {
                                 <div className="images">
                                     {project.images.map((img, ind) => {
                                         return (
-                                            <div className="img-box">
-                                                <img
-                                                    key={ind}
-                                                    src={img.path}
-                                                    alt=""
-                                                />
+                                            <div key={ind} className="img-box">
+                                                <img src={img.path} alt="" />
                                                 <div className="img-overlay"></div>
                                                 <button
-                                                    onClick={
-                                                        this.handleImageShow
+                                                    type="button"
+                                                    className="show-btn btn btn-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target={
+                                                        "#image-show-" + img.id
                                                     }
-                                                    className="show-btn btn btn-outline-light"
                                                 >
-                                                    Show
+                                                    <i className="bi bi-eye-fill"></i>
                                                 </button>
+                                                {this.renderImageView(img)}
                                             </div>
                                         );
                                     })}
@@ -135,14 +166,11 @@ class Projects extends Component {
                                 <p className="description">
                                     {project.description}
                                 </p>
-                                <div
-                                    ref={this.imageDisplayRef}
-                                    className=" image-display"
-                                ></div>
                             </div>
                         );
                     })}
                 </div>
+                <div ref={this.imageViewRef} className="image-view"></div>
             </div>
         );
     }

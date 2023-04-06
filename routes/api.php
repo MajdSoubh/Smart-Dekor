@@ -25,8 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request)
 Route::post('/signup', [AuthController::class, "signup"]);
 Route::post('/login', [AuthController::class, "login"]);
 Route::post('/logout', [AuthController::class, "logout"]);
+
 Route::get('/contact', [ContactController::class, "all"]);
-Route::put('/contact/update', [ContactController::class, "store"]);
+Route::post('/contact/update', [ContactController::class, "store"]);
+
+Route::get('/header', [ContactController::class, "all"]);
+Route::post('/header/update', [ContactController::class, "store"]);
 
 Route::get('/category', [CategoryController::class, "all"])->middleware("auth:sanctum");
 Route::post('/category', [CategoryController::class, "store"]);

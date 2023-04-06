@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./assets/styles/index.css";
 import "./assets/styles/home.css";
+import "./assets/styles/footer.css";
 import "./assets/styles/projects.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

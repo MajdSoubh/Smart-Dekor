@@ -46,6 +46,7 @@ class Home extends Component {
 
                 <div className="container">
                     {/* Intro */}
+
                     <Intro data={this.state.intro} />
                     <hr className="horizontal-line" />
                     {/* Projects */}

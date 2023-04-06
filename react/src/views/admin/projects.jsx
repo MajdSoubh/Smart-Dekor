@@ -13,7 +13,7 @@ class ProjectTable extends Component {
         sortColumns: [],
         search: "",
         currentPage: 1,
-        pageLimit: 4,
+        pageLimit: 8,
     };
     columns = [
         {
